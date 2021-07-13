@@ -78,7 +78,7 @@ exports.rateOneSauce = (req, res, next) => {
               $inc: { likes: -1 },                            // on décrémente la valeur des likes de 1 (soit -1)
               $pull: { usersLiked: req.body.userId }          // on retire l'utilisateur du tableau.
             })
-              .then(() => { res.status(201).json({ message: "vote enregistré."}); }) //code 201: created
+              .then(() => { res.status(200).json({ message: "vote enregistré."}); }) //code 201: created
               .catch((error) => { res.status(400).json({error}); });
 
           } 
@@ -87,7 +87,7 @@ exports.rateOneSauce = (req, res, next) => {
               $inc: { dislikes: -1 },
               $pull: { usersDisliked: req.body.userId }
             })
-              .then(() => { res.status(201).json({ message: "vote enregistré." }); })
+              .then(() => { res.status(200).json({ message: "vote enregistré." }); })
               .catch((error) => { res.status(400).json({error}); });
           }
         })
@@ -99,7 +99,7 @@ exports.rateOneSauce = (req, res, next) => {
         $inc: { likes: 1 },                                 // incrémentaton de la valeur de likes par 1.
         $push: { usersLiked: req.body.userId }              // on ajoute l'utilisateur dans le array usersLiked.
       })
-        .then(() => { res.status(201).json({ message: "vote enregistré." }); }) //code 201: created
+        .then(() => { res.status(200).json({ message: "vote enregistré." }); }) //code 201: created
         .catch((error) => { res.status(400).json({ error }); }); //code 400: bad request
       break;
     
@@ -108,7 +108,7 @@ exports.rateOneSauce = (req, res, next) => {
         $inc: { dislikes: 1 },                                // on décremente de 1 la valeur de dislikes.
         $push: { usersDisliked: req.body.userId }             // on rajoute l'utilisateur à l'array usersDiliked.
       })
-        .then(() => { res.status(201).json({ message: "vote enregistré." }); }) // code 201: created
+        .then(() => { res.status(200).json({ message: "vote enregistré." }); }) // code 201: created
         .catch((error) => { res.status(400).json({ error }); }); // code 400: bad request
       break;
     default:

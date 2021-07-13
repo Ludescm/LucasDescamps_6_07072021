@@ -3,31 +3,14 @@ const bcrypt = require('bcrypt');   // pour hasher le mot de passe
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-function maskator(sentence) {
-  if (typeof sentence === "string") {
-    let headMail = sentence.slice(0,1);
-    let bodyMail = sentence.slice(1, sentence.length-4);
-    let bottomMail = sentence.slice(sentence.length-4, sentence.length);
-    let final = [];
-    var masked = bodyMail.split('');
-    var maskedMail = [];
-    for(let i in masked) {
-      masked[i] = '*';
-      maskedMail += masked[i];  
-    }
-    final += headMail + maskedMail + bottomMail
-    return final;
-  }
-  console.log(sentence + " is not a mail");
-  return false
-}
+
 
 // inscription d'un utilisateur
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
   .then(hash => {
     const user = new User ({
-      email: maskator(req.body.email),
+      email: req.body.email,
       password: hash
     });
     console.log(user);
@@ -42,7 +25,7 @@ exports.signup = (req, res, next) => {
 
 // connexion de l'utilisateur
 exports.login = (req, res, next) => {
-  User.findOne({ email: maskator(req.body.email) })
+  User.findOne({ email: req.body.email })
     .then(user => {
       if (!user) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' });

@@ -4,8 +4,8 @@ const mongoose = require('mongoose');                // import mongoose: ODM, a 
 const helmet = require('helmet');                  // import helmet: help to secure Express apps by setting various HTTP headers.
 const path = require('path');                    // import path: provides a way of working with directories and file paths. (line 44)
 const cors = require('cors');                    // import cors: manage cross-origin resource sharing
-const rateLimit = require('express-rate-limit');      // comme son nom l'indique: on va fixer un taux limite pour les requêtes.
-
+const rateLimit = require('express-rate-limit'); // comme son nom l'indique: on va fixer un taux limite pour les requêtes.
+require ('dotenv').config();    
 //constante à utiliser avec le package rateLimit
 const limiter = rateLimit({         
     windowMs: 15 * 60 * 1000,       // = 15 minutes
@@ -21,7 +21,7 @@ app.use(helmet());
 app.use(cors({origin: 'http://localhost:4200'}));
 
 //
-mongoose.connect('mongodb+srv://Newuser:16081996Newuser@cluster0.5eydi.mongodb.net/P6_OPENC_PIQUANTE?retryWrites=true&w=majority',
+mongoose.connect( process.env.DB,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
